@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/proyectobootcampbd
+    url: jdbc:postgresql://localhost:5432/java_gip346c
     username: postgres
     password: andres0921
 
@@ -22,3 +22,5 @@ server:
   port: 8080
   error:
     include-message: always
+  
+  

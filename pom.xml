@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.11</version>
+		<version>3.5.10</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.talentotech</groupId>
@@ -38,7 +38,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-<!-- bloque de seguridad -->
+
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -51,13 +51,12 @@
 		</dependency>
 
 <!-- bloque de seguridad -->
-
-<!-- <dependency>
+<dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-security</artifactId>
-</dependency> -->
+</dependency>
 
-<!-- <dependency>
+<dependency>
     <groupId>io.jsonwebtoken</groupId>
     <artifactId>jjwt-api</artifactId>
     <version>0.11.5</version>
@@ -74,7 +73,7 @@
     <artifactId>jjwt-jackson</artifactId>
     <version>0.11.5</version>
     <scope>runtime</scope>
-</dependency> -->
+</dependency>
 
 	</dependencies>
 

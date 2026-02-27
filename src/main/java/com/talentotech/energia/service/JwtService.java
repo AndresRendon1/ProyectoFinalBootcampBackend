@@ -6,13 +6,15 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.JwtException;
+import java.security.Key;
 import java.util.Date;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 @Service
 public class JwtService {
-    private final String secret = "claveUltraSecreta";
+    private final String secret = "0123456789ABCDEF0123456789ABCDEF";
+    private final Key signingKey = Keys.hmacShaKeyFor(secret.getBytes());
 
     public String generateToken(User user) {
         return Jwts.builder()
@@ -20,14 +22,14 @@ public class JwtService {
                 .claim("role", user.getRole().name())
                 .setIssuedAt(new Date())
                 .setExpiration(Date.from(Instant.now().plus(1, ChronoUnit.DAYS)))
-                .signWith(Keys.hmacShaKeyFor(secret.getBytes()), SignatureAlgorithm.HS256)
+                .signWith(signingKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
-                .setSigningKey(secret.getBytes())
+                .setSigningKey(signingKey)
                 .build()
                 .parseClaimsJws(token);
             return true;
@@ -38,7 +40,7 @@ public class JwtService {
 
     public String extractUsername(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(secret.getBytes())
+                .setSigningKey(signingKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()

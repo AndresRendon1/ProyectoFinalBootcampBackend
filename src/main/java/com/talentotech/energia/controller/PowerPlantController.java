@@ -6,7 +6,7 @@ import com.talentotech.energia.model.PowerPlant;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/power-plant")
+@RequestMapping("/api/power-plants")
 @RequiredArgsConstructor
 public class PowerPlantController {
 

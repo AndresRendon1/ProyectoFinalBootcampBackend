@@ -2,6 +2,8 @@ package com.talentotech.energia.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import com.talentotech.energia.repository.*;
 import com.talentotech.energia.model.*;
 import com.talentotech.energia.exception.ResourceNotFoundException;
@@ -18,6 +20,26 @@ public class PowerPlantService {
     private final EnergyTypeRepository energyTypeRepository;
 
     public PowerPlant save(PowerPlant plant) {
+
+        if (plant == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "PowerPlant payload is required");
+        }
+
+        if (plant.getName() == null || plant.getName().trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "PowerPlant name is required");
+        }
+
+        if (plant.getCompany() == null || plant.getCompany().getId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "company.id is required");
+        }
+
+        if (plant.getRegion() == null || plant.getRegion().getId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "region.id is required");
+        }
+
+        if (plant.getEnergyType() == null || plant.getEnergyType().getId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "energyType.id is required");
+        }
 
         Long companyId = plant.getCompany().getId();
         Long regionId = plant.getRegion().getId();

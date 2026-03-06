@@ -1,47 +1,48 @@
 package com.talentotech.energia.service;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import com.talentotech.energia.repository.RegionRepository;
-import com.talentotech.energia.repository.CountryRepository;
-import com.talentotech.energia.model.Region;
-import com.talentotech.energia.model.Country;
-import com.talentotech.energia.exception.ResourceNotFoundException;
-import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class RegionService {
+// import lombok.RequiredArgsConstructor;
+// import org.springframework.stereotype.Service;
+// import com.talentotech.energia.repository.RegionRepository;
+// import com.talentotech.energia.repository.CountryRepository;
+// import com.talentotech.energia.model.Region;
+// import com.talentotech.energia.model.Country;
+// import com.talentotech.energia.exception.ResourceNotFoundException;
+// import java.util.List;
 
-    private final RegionRepository regionRepository;
-    private final CountryRepository countryRepository;
+// @Service
+// @RequiredArgsConstructor
+// public class RegionService {
 
-    public Region save(Region region) {
+//     private final RegionRepository regionRepository;
+//     private final CountryRepository countryRepository;
 
-        Long countryId = region.getCountry().getId();
+//     public Region save(Region region) {
 
-        Country country = countryRepository.findById(countryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Country not found"));
+//         Long countryId = region.getCountry().getId();
 
-        if (regionRepository.existsByNameAndCountryId(region.getName(), countryId)) {
-            throw new ResourceNotFoundException("Region already exists in this country");
-        }
+//         Country country = countryRepository.findById(countryId)
+//                 .orElseThrow(() -> new ResourceNotFoundException("Country not found"));
 
-        region.setCountry(country);
+//         if (regionRepository.existsByNameAndCountryId(region.getName(), countryId)) {
+//             throw new ResourceNotFoundException("Region already exists in this country");
+//         }
 
-        return regionRepository.save(region);
-    }
+//         region.setCountry(country);
 
-    public List<Region> findAll() {
-        return regionRepository.findAll();
-    }
+//         return regionRepository.save(region);
+//     }
 
-    public Region findById(Long id) {
-        return regionRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Region not found"));
-    }
+//     public List<Region> findAll() {
+//         return regionRepository.findAll();
+//     }
 
-    public List<Region> findByCountry(Long countryId) {
-        return regionRepository.findByCountryId(countryId);
-    }
-}
+//     public Region findById(Long id) {
+//         return regionRepository.findById(id)
+//                 .orElseThrow(() -> new ResourceNotFoundException("Region not found"));
+//     }
+
+//     public List<Region> findByCountry(Long countryId) {
+//         return regionRepository.findByCountryId(countryId);
+//     }
+// }
 

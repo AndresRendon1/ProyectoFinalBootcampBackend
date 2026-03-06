@@ -1,4 +1,5 @@
 package com.talentotech.energia.controller;
+
 import com.talentotech.energia.service.CountryService;
 import com.talentotech.energia.model.Country;
 import org.springframework.web.bind.annotation.*;
@@ -6,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import lombok.RequiredArgsConstructor;
 import java.util.List;
 @RestController
-@RequestMapping("/api/country")
+@RequestMapping("/api/countries")
 @RequiredArgsConstructor
 public class CountryController {
 

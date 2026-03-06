@@ -1,7 +1,8 @@
 package com.talentotech.energia.repository;
-import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.talentotech.energia.model.Country;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CountryRepository extends JpaRepository<Country, Long> {
 

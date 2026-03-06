@@ -1,48 +1,62 @@
 package com.talentotech.energia.service;
 
-// import lombok.RequiredArgsConstructor;
-// import org.springframework.stereotype.Service;
-// import com.talentotech.energia.repository.RegionRepository;
-// import com.talentotech.energia.repository.CountryRepository;
-// import com.talentotech.energia.model.Region;
-// import com.talentotech.energia.model.Country;
-// import com.talentotech.energia.exception.ResourceNotFoundException;
-// import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+import com.talentotech.energia.repository.RegionRepository;
+import com.talentotech.energia.repository.CountryRepository;
+import com.talentotech.energia.model.Region;
+import com.talentotech.energia.model.Country;
+import com.talentotech.energia.exception.ResourceNotFoundException;
+import java.util.List;
 
-// @Service
-// @RequiredArgsConstructor
-// public class RegionService {
+@Service
+@RequiredArgsConstructor
+public class RegionService {
 
-//     private final RegionRepository regionRepository;
-//     private final CountryRepository countryRepository;
+    private final RegionRepository regionRepository;
+    private final CountryRepository countryRepository;
 
-//     public Region save(Region region) {
+    public Region save(Region region) {
 
-//         Long countryId = region.getCountry().getId();
+        if (region == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Region payload is required");
+        }
 
-//         Country country = countryRepository.findById(countryId)
-//                 .orElseThrow(() -> new ResourceNotFoundException("Country not found"));
+        if (region.getName() == null || region.getName().trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Region name is required");
+        }
 
-//         if (regionRepository.existsByNameAndCountryId(region.getName(), countryId)) {
-//             throw new ResourceNotFoundException("Region already exists in this country");
-//         }
+        if (region.getCountry() == null || region.getCountry().getId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "country.id is required");
+        }
 
-//         region.setCountry(country);
+        Long countryId = region.getCountry().getId();
 
-//         return regionRepository.save(region);
-//     }
+        Country country = countryRepository.findById(countryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Country not found"));
 
-//     public List<Region> findAll() {
-//         return regionRepository.findAll();
-//     }
+        if (regionRepository.existsByNameAndCountryId(region.getName(), countryId)) {
+            throw new ResourceNotFoundException("Region already exists in this country");
+        }
 
-//     public Region findById(Long id) {
-//         return regionRepository.findById(id)
-//                 .orElseThrow(() -> new ResourceNotFoundException("Region not found"));
-//     }
+        region.setCountry(country);
 
-//     public List<Region> findByCountry(Long countryId) {
-//         return regionRepository.findByCountryId(countryId);
-//     }
-// }
+        return regionRepository.save(region);
+    }
+
+    public List<Region> findAll() {
+        return regionRepository.findAll();
+    }
+
+    public Region findById(Long id) {
+        return regionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Region not found"));
+    }
+
+    public List<Region> findByCountry(Long countryId) {
+        return regionRepository.findByCountryId(countryId);
+    }
+}
 

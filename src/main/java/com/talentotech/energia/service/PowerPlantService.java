@@ -1,61 +1,62 @@
-// package com.talentotech.energia.service;
-// import lombok.RequiredArgsConstructor;
-// import org.springframework.stereotype.Service;
-// import com.talentotech.energia.repository.*;
-// import com.talentotech.energia.model.*;
-// import com.talentotech.energia.exception.ResourceNotFoundException;
+package com.talentotech.energia.service;
 
-// import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import com.talentotech.energia.repository.*;
+import com.talentotech.energia.model.*;
+import com.talentotech.energia.exception.ResourceNotFoundException;
 
-// @Service
-// @RequiredArgsConstructor
-// public class PowerPlantService {
+import java.util.List;
 
-//     private final PowerPlantRepository powerPlantRepository;
-//     private final CompanyRepository companyRepository;
-//     private final RegionRepository regionRepository;
-//     private final EnergyTypeRepository energyTypeRepository;
+@Service
+@RequiredArgsConstructor
+public class PowerPlantService {
 
-//     public PowerPlant save(PowerPlant plant) {
+    private final PowerPlantRepository powerPlantRepository;
+    private final CompanyRepository companyRepository;
+    private final RegionRepository regionRepository;
+    private final EnergyTypeRepository energyTypeRepository;
 
-//         Long companyId = plant.getCompany().getId();
-//         Long regionId = plant.getRegion().getId();
-//         Long energyTypeId = plant.getEnergyType().getId();
+    public PowerPlant save(PowerPlant plant) {
 
-//         Company company = companyRepository.findById(companyId)
-//                 .orElseThrow(() -> new ResourceNotFoundException("Company not found"));
+        Long companyId = plant.getCompany().getId();
+        Long regionId = plant.getRegion().getId();
+        Long energyTypeId = plant.getEnergyType().getId();
 
-//         Region region = regionRepository.findById(regionId)
-//                 .orElseThrow(() -> new ResourceNotFoundException("Region not found"));
+        Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new ResourceNotFoundException("Company not found"));
 
-//         EnergyType energyType = energyTypeRepository.findById(energyTypeId)
-//                 .orElseThrow(() -> new ResourceNotFoundException("EnergyType not found"));
+        Region region = regionRepository.findById(regionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Region not found"));
 
-//         if (powerPlantRepository.existsByNameAndCompanyId(plant.getName(), companyId)) {
-//             throw new ResourceNotFoundException("PowerPlant already exists in this company");
-//         }
+        EnergyType energyType = energyTypeRepository.findById(energyTypeId)
+                .orElseThrow(() -> new ResourceNotFoundException("EnergyType not found"));
 
-//         plant.setCompany(company);
-//         plant.setRegion(region);
-//         plant.setEnergyType(energyType);
+        if (powerPlantRepository.existsByNameAndCompanyId(plant.getName(), companyId)) {
+            throw new ResourceNotFoundException("PowerPlant already exists in this company");
+        }
 
-//         return powerPlantRepository.save(plant);
-//     }
+        plant.setCompany(company);
+        plant.setRegion(region);
+        plant.setEnergyType(energyType);
 
-//     public List<PowerPlant> findAll() {
-//         return powerPlantRepository.findAll();
-//     }
+        return powerPlantRepository.save(plant);
+    }
 
-//     public PowerPlant findById(Long id) {
-//         return powerPlantRepository.findById(id)
-//                 .orElseThrow(() -> new ResourceNotFoundException("PowerPlant not found"));
-//     }
+    public List<PowerPlant> findAll() {
+        return powerPlantRepository.findAll();
+    }
 
-//     public List<PowerPlant> findByCompany(Long companyId) {
-//         return powerPlantRepository.findByCompanyId(companyId);
-//     }
+    public PowerPlant findById(Long id) {
+        return powerPlantRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("PowerPlant not found"));
+    }
 
-//     public List<PowerPlant> findByRegion(Long regionId) {
-//         return powerPlantRepository.findByRegionId(regionId);
-//     }
-// }
+    public List<PowerPlant> findByCompany(Long companyId) {
+        return powerPlantRepository.findByCompanyId(companyId);
+    }
+
+    public List<PowerPlant> findByRegion(Long regionId) {
+        return powerPlantRepository.findByRegionId(regionId);
+    }
+}

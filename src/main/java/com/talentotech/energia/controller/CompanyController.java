@@ -6,7 +6,7 @@ import com.talentotech.energia.model.Company;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/company")
+@RequestMapping("/api/companies")
 @RequiredArgsConstructor
 public class CompanyController {
 

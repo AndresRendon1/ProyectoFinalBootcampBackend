@@ -1,6 +1,8 @@
 package com.talentotech.energia.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import com.talentotech.energia.repository.CountryRepository;
 import com.talentotech.energia.repository.CompanyRepository;
 import com.talentotech.energia.model.Country;
@@ -16,6 +18,18 @@ public class CompanyService {
     private final CountryRepository countryRepository;
 
     public Company save(Company company) {
+
+        if (company == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Company payload is required");
+        }
+
+        if (company.getName() == null || company.getName().trim().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Company name is required");
+        }
+
+        if (company.getCountry() == null || company.getCountry().getId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "country.id is required");
+        }
 
         Long countryId = company.getCountry().getId();
 

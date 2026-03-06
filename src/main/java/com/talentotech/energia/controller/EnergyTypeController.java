@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
  @RestController
-@RequestMapping("/api/energy-type")
+@RequestMapping("/api/energy-types")
 @RequiredArgsConstructor
 public class EnergyTypeController {
 

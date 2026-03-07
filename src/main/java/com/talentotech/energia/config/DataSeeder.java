@@ -57,12 +57,30 @@ public class DataSeeder implements CommandLineRunner {
         PowerPlant zipaquira = seedPowerPlant("Zipaquira Plant", ePM, cundinamarca, coal);
         PowerPlant guadalajara = seedPowerPlant("Guadalajara Plant", cfe, jalisco, solar);
 
-        seedEnergyRecord(guatape, generated, 2026, 1, new BigDecimal("12500.00"));
-        seedEnergyRecord(guatape, generated, 2026, 2, new BigDecimal("13120.50"));
+        // seed records for each month of 2026 for the three existing plants
+        for (int m = 1; m <= 12; m++) {
+            seedEnergyRecord(guatape, generated, 2026, m, new BigDecimal(11000 + m * 300 + ".00"));
+            seedEnergyRecord(zipaquira, generated, 2026, m, new BigDecimal(9000 + m * 200 + ".00"));
+            seedEnergyRecord(guadalajara, generated, 2026, m, new BigDecimal(7000 + m * 150 + ".00"));
+        }
 
-        seedEnergyRecord(zipaquira, generated, 2026, 1, new BigDecimal("9800.00"));
+        // additional country/region/company/plant for other part of the world
+        Country usa = seedCountry("USA");
+        Region california = seedRegion("California", usa);
+        Company pge = seedCompany("PG&E", usa);
+        PowerPlant sanJose = seedPowerPlant("San Jose Plant", pge, california, solar);
+        for (int m = 1; m <= 12; m++) {
+            seedEnergyRecord(sanJose, generated, 2026, m, new BigDecimal(5000 + m * 100 + ".00"));
+        }
 
-        seedEnergyRecord(guadalajara, generated, 2026, 1, new BigDecimal("7700.00"));
+        // another example for Europe
+        Country spain = seedCountry("Spain");
+        Region catalonia = seedRegion("Catalonia", spain);
+        Company iberdrola = seedCompany("Iberdrola", spain);
+        PowerPlant barcelona = seedPowerPlant("Barcelona Plant", iberdrola, catalonia, solar);
+        for (int m = 1; m <= 12; m++) {
+            seedEnergyRecord(barcelona, generated, 2026, m, new BigDecimal(6000 + m * 120 + ".00"));
+        }
     }
 
     private Country seedCountry(String name) {

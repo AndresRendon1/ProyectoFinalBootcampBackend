@@ -20,9 +20,13 @@ public class ReportsService {
     private final EnergyRecordRepository energyRecordRepository;
     private final EnergyTypeRepository energyTypeRepository;
 
-    public List<EnergyTypeMonthlySeriesResponse> energyTypeMonthlyTotals(Integer year, Long countryId, Long regionId) {
+    public List<EnergyTypeMonthlySeriesResponse> energyTypeMonthlyTotals(
+            Integer year,
+            Boolean renewable,
+            Long countryId,
+            Long regionId) {
         List<EnergyRecordRepository.EnergyTypeMonthTotalProjection> rows =
-                energyRecordRepository.sumByEnergyTypeAndMonth(year, countryId, regionId);
+                energyRecordRepository.sumByEnergyTypeAndMonth(year, renewable, countryId, regionId);
 
         Map<Long, EnergyTypeMonthlySeriesResponse> seriesByEnergyTypeId = new HashMap<>();
 
@@ -44,7 +48,11 @@ public class ReportsService {
 
         List<EnergyTypeMonthlySeriesResponse> result = new ArrayList<>();
 
-        for (EnergyType energyType : energyTypeRepository.findAll()) {
+        List<EnergyType> energyTypes = (renewable == null)
+                ? energyTypeRepository.findAll()
+                : energyTypeRepository.findByRenewable(renewable);
+
+        for (EnergyType energyType : energyTypes) {
             EnergyTypeMonthlySeriesResponse series = seriesByEnergyTypeId.get(energyType.getId());
             if (series == null) {
                 List<BigDecimal> data = new ArrayList<>(12);

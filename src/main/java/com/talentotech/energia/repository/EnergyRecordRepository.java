@@ -36,6 +36,7 @@ public interface EnergyRecordRepository extends JpaRepository<EnergyRecord, Long
                 join pp.region r
                 join r.country c
             where (:year is null or er.year = :year)
+              and (:renewable is null or et.renewable = :renewable)
               and (:countryId is null or c.id = :countryId)
               and (:regionId is null or r.id = :regionId)
             group by et.id, et.name, er.month
@@ -43,6 +44,7 @@ public interface EnergyRecordRepository extends JpaRepository<EnergyRecord, Long
             """)
     List<EnergyTypeMonthTotalProjection> sumByEnergyTypeAndMonth(
             @Param("year") Integer year,
+            @Param("renewable") Boolean renewable,
             @Param("countryId") Long countryId,
             @Param("regionId") Long regionId);
 

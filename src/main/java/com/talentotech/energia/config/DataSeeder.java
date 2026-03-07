@@ -52,7 +52,6 @@ public class DataSeeder implements CommandLineRunner {
         EnergyType coal = seedEnergyType("Coal", false);
 
         MeasurementType generated = seedMeasurementType("Generated Energy", "kWh");
-        MeasurementType co2 = seedMeasurementType("CO2 Emissions", "kg");
 
         PowerPlant guatape = seedPowerPlant("Guatape Plant", ePM, antioquia, solar);
         PowerPlant zipaquira = seedPowerPlant("Zipaquira Plant", ePM, cundinamarca, coal);
@@ -60,13 +59,10 @@ public class DataSeeder implements CommandLineRunner {
 
         seedEnergyRecord(guatape, generated, 2026, 1, new BigDecimal("12500.00"));
         seedEnergyRecord(guatape, generated, 2026, 2, new BigDecimal("13120.50"));
-        seedEnergyRecord(guatape, co2, 2026, 1, new BigDecimal("0.00"));
 
         seedEnergyRecord(zipaquira, generated, 2026, 1, new BigDecimal("9800.00"));
-        seedEnergyRecord(zipaquira, co2, 2026, 1, new BigDecimal("4500.00"));
 
         seedEnergyRecord(guadalajara, generated, 2026, 1, new BigDecimal("7700.00"));
-        seedEnergyRecord(guadalajara, co2, 2026, 1, new BigDecimal("0.00"));
     }
 
     private Country seedCountry(String name) {

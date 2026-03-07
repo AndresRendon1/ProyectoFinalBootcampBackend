@@ -19,7 +19,10 @@ public class RegionController {
     }
 
     @GetMapping
-    public List<Region> findAll() {
+    public List<Region> findAll(@RequestParam(name = "country_id", required = false) Long countryId) {
+        if (countryId != null) {
+            return regionService.findByCountry(countryId);
+        }
         return regionService.findAll();
     }
 

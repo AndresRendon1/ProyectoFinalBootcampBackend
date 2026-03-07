@@ -50,18 +50,21 @@ public class DataSeeder implements CommandLineRunner {
 
         EnergyType solar = seedEnergyType("Solar", true);
         EnergyType coal = seedEnergyType("Coal", false);
+        EnergyType wind = seedEnergyType("Wind", true);
 
         MeasurementType generated = seedMeasurementType("Generated Energy", "kWh");
 
         PowerPlant guatape = seedPowerPlant("Guatape Plant", ePM, antioquia, solar);
         PowerPlant zipaquira = seedPowerPlant("Zipaquira Plant", ePM, cundinamarca, coal);
         PowerPlant guadalajara = seedPowerPlant("Guadalajara Plant", cfe, jalisco, solar);
+        PowerPlant medellinWind = seedPowerPlant("Medellin Wind Farm", ePM, antioquia, wind);
 
         // seed records for each month of 2026 for the three existing plants
         for (int m = 1; m <= 12; m++) {
             seedEnergyRecord(guatape, generated, 2026, m, new BigDecimal(11000 + m * 300 + ".00"));
             seedEnergyRecord(zipaquira, generated, 2026, m, new BigDecimal(9000 + m * 200 + ".00"));
             seedEnergyRecord(guadalajara, generated, 2026, m, new BigDecimal(7000 + m * 150 + ".00"));
+            seedEnergyRecord(medellinWind, generated, 2026, m, new BigDecimal(8000 + m * 180 + ".00"));
         }
 
         // additional country/region/company/plant for other part of the world
